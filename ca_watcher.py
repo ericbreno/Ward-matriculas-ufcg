@@ -97,7 +97,7 @@ while 1:
         print ultimas_infos    
         break
    
-    time.sleep(30)
+    time.sleep(15)
    
     ultimas_infos = novo
     novo = ''
