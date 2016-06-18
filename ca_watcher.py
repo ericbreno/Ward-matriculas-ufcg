@@ -77,7 +77,7 @@ parte_importante = ''
 first_run = True
    
 while 1:   
-    system("clear") # Opcional
+    print "\n===== Nova requisicao ====="
    
     time.ctime()
     print time.strftime('%X %x %Z')
@@ -93,7 +93,7 @@ while 1:
     print novo
  
     if novo != ultimas_infos and not first_run:
-        print "Algo mudou!"
+        print "Matriculas abertas!"
         print ultimas_infos    
         break
    
