@@ -65,7 +65,7 @@ def logaRetornaBrowser():
 
 # Faz o parse das informacoes da pagina para poder imprimir no console
 def filtraQueOMlkTaDoente(pagina):
-    sopa = bs(pagina, "lxml") # "lxml" para linux, "html.parser" para windows
+    sopa = bs(pagina, "lxml") # "html.parser" para osx ou windows, "lxml" para linux
     sopa = sopa.findAll('li', attrs={"class": "dropdown"})
     parte_que_quero = str(sopa[1]).split()
  
