@@ -1,7 +1,7 @@
 # coding: utf-8
 # Programa escrito por Eric Breno B. dos Santos
-# Programa apenas para fins didáticos
-# Recomendado rodar em sistemas linux, é necessario instalar o pacote mechanize e cookielib.
+# Programa apenas para fins didï¿½ticos
+# Recomendado rodar em sistemas linux, ï¿½ necessario instalar o pacote mechanize e cookielib.
 # Para instalar use "sudo apt-get install python-setuptools", "sudo easy_install mechanize",
 # "sudo easy_install html2text" e "sudo apt-get install python-bs4"
 #
@@ -10,6 +10,7 @@
 ###########################################################################
  
 import mechanize, cookielib, time, ssl
+import smtplib
 from os import system
 from bs4 import BeautifulSoup as bs
  
@@ -22,7 +23,7 @@ else:
     # Handle target environment that doesn't support HTTPS verification
     ssl._create_default_https_context = _create_unverified_https_context        
 
-# Funcao utilizada para sempre reiniciar o browser e nao dar problema ao verificar se houveram mudanças
+# Funcao utilizada para sempre reiniciar o browser e nao dar problema ao verificar se houveram mudanï¿½as
 # pois o controle academico as vezes buga quando voce esta logado e nao aparece a opcao de realizar matriculas
 def logaRetornaBrowser():
     br = mechanize.Browser()
@@ -35,7 +36,7 @@ def logaRetornaBrowser():
     cj = cookielib.LWPCookieJar()
     br.set_cookiejar(cj)
  
-    # Ajusta algumas opções do navegador...
+    # Ajusta algumas opï¿½ï¿½es do navegador...
     br.set_handle_equiv(True)
     br.set_handle_gzip(False)
     br.set_handle_redirect(True)
@@ -49,27 +50,51 @@ def logaRetornaBrowser():
      U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615\
     Fedora/3.0.1-1.fc9 Firefox/3.0.1')]      
  
-    # Pronto! Agora é navegar, acessando a URL usando o método HTTP GET
+    # Pronto! Agora ï¿½ navegar, acessando a URL usando o mï¿½todo HTTP GET
     br.open(url)
  
-    # Se existirem formulários, você pode selecionar o primeiro (#0), por exemplo...
+    # Se existirem formulï¿½rios, vocï¿½ pode selecionar o primeiro (#0), por exemplo...
     br.select_form(nr=0)
  
-    # Preencher o formulário com os dados de login...
+    # Preencher o formulï¿½rio com os dados de login...
     br.form['login'] = matric
     br.form['senha'] = senha
  
-    # Enviar o formulário usando o método HTTP POST
+    # Enviar o formulï¿½rio usando o mï¿½todo HTTP POST
     br.submit()
     return br
 
+def avisa_o_maluco(nota):
+
+    email = 'kaio.kassiano.oliveira@gmail.com'
+    emails = ['kaio.kassiano.oliveira@gmail.com', 'kaio.kassiano.oliveira@ccc.ufcg.edu.br', 'joserenansl99@gmail.com', 'joao.felipe@ccc.ufcg.edu.br', 'caio.camboim@ccc.ufcg.edu.br', 'adson.silva@ccc.ufcg.edu.br', 'rubensbbatista@gmail.com']
+    kaiooo = ['kaio.kassiano.oliveira@gmail.com', 'kaio.kassiano.oliveira@ccc.ufcg.edu.br']
+    app = 'acsoloceoiirdqzz'
+
+    smtp_server = smtplib.SMTP('smtp.gmail.com', 587)
+    smtp_server.ehlo()
+    smtp_server.starttls()
+    smtp_server.login(email, app)
+
+    teste2 = 'SAIU A NOTA DA FINAL DE PROB, MIZERA'
+
+    for i in emails:
+        print i
+        if (i in kaiooo):
+            smtp_server.sendmail(email, i, teste2 + ': ' + nota)
+        else:
+	        smtp_server.sendmail(email, i, teste2)
+
+    smtp_server.quit()
+    print('Email sent successfully')
+
 # Faz o parse das informacoes da pagina para poder imprimir no console
 def filtraQueOMlkTaDoente(pagina):
-    sopa = bs(pagina, "lxml") # "html.parser" para osx ou windows, "lxml" para linux
-    sopa = sopa.findAll('li', attrs={"class": "dropdown"})
-    parte_que_quero = str(sopa[1]).split()
- 
-    return "\n".join([p for p in parte_que_quero if "href" in p])
+    sopa = bs(pagina, "html.parser") # "html.parser" para osx ou windows, "lxml" para linux
+    sopa = sopa.findAll('td', attrs={"class": "text-right"})
+    parte_que_quero = str(sopa[4]).split()
+
+    return parte_que_quero
  
 ultimas_infos = ''
 parte_importante = ''
@@ -84,7 +109,7 @@ while 1:
    
     br = logaRetornaBrowser()
  
-    link = "https://pre.ufcg.edu.br:8443/ControleAcademicoOnline/Controlador"
+    link = "https://pre.ufcg.edu.br:8443/ControleAcademicoOnline/Controlador?command=AlunoTurmaNotas&codigo=1114107&turma=01&periodo=2017.1"
     br.open(link)
     novaPag = br.response().read()
     novaPag += "Terminado com sucesso. Aguarde..."
@@ -93,11 +118,12 @@ while 1:
     print novo
  
     if novo != ultimas_infos and not first_run:
-        print "Matriculas abertas!"
-        print ultimas_infos    
+        print "saiu, mizera!"
+        print novo
+        avisa_o_maluco(novo)
         break
    
-    time.sleep(15)
+    time.sleep(20)
    
     ultimas_infos = novo
     novo = ''
