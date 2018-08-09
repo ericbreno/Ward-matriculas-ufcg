@@ -4,12 +4,10 @@ Programa criado para ficar monitorando o controle acadêmico e avisar quando as 
 É necessario instalar os pacotes <a href="https://pypi.python.org/pypi/mechanize/" target="_blank">mechanize</a> e <a href="https://docs.python.org/2.7/library/cookielib.html" target="_blank">cookielib</a>.<br><br>
 
 ## Para instalação dos módulos, em Linux, use:
-<br><code>sudo apt-get install python-setuptools</code>
-<br><code>sudo easy_install mechanize</code>
-<br><code>sudo easy_install html2text</code>
-<br><code>sudo apt-get install python-bs4</code>
+`pip install -r requirements.txt`
+###### *** obs: é necessário ter o python 3
 
-## Em Windows, caso já tenha python instalado, use:
-<br><code>python -m pip install mechanize</code>
-<br><code>python -m pip install BeautifulSoup4</code>
-<br><code>python -m pip install html2text</code>
+## Para executar o readme, digite no terminal:
+`python run.py -m [matricula] -s [senha]`
+
+Digite  `python run.py --help` para mais informações. :)
