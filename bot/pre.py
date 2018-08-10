@@ -64,7 +64,7 @@ def start_bot(enrolment, password):
             itens = parse_html()
             enrolment_released = is_enrolment_released(itens)
             response.waiting()
-            time.sleep(3)
+            time.sleep(15)
         except requests.exceptions.HTTPError:
             response.http_error()
         except requests.exceptions.ConnectionError:
