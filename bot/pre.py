@@ -7,7 +7,7 @@ import webbrowser
 from .utils import response
 
 BASE_URL = 'https://pre.ufcg.edu.br:8443/ControleAcademicoOnline'
-KEYWORD = 'Realizar matricula'
+KEYWORD = u'Realizar matrícula'
 
 
 browser = mechanicalsoup.StatefulBrowser(
@@ -64,7 +64,7 @@ def start_bot(enrolment, password):
             itens = parse_html()
             enrolment_released = is_enrolment_released(itens)
             response.waiting()
-            time.sleep(15)
+            time.sleep(2)
         except requests.exceptions.HTTPError:
             response.http_error()
         except requests.exceptions.ConnectionError:
