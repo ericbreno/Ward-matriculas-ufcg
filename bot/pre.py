@@ -7,7 +7,7 @@ import webbrowser
 from .utils import response
 
 BASE_URL = 'https://pre.ufcg.edu.br:8443/ControleAcademicoOnline'
-KEYWORD = 'Realizar matricula'
+KEYWORD = u'Realizar matrícula'
 
 
 browser = mechanicalsoup.StatefulBrowser(
